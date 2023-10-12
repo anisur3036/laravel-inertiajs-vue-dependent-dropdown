@@ -62,7 +62,7 @@ watch(
       <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
         <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
           <div>
-            <form>
+            <form @submit.prevent="console.log(form)">
               <div class="flex flex-col">
                 <label for="district">District</label>
                 <select v-model="form.district" name="district" id="district">
@@ -71,7 +71,7 @@ watch(
                 </select>
               </div>
 
-              <div class="flex flex-col">
+              <div class="mt-4 flex flex-col">
                 <label for="thana">Thana</label>
                 <select v-model="form.thana" name="thana" id="thana">
                   <option value="">Select one</option>
@@ -79,13 +79,14 @@ watch(
                 </select>
               </div>
 
-              <div class="flex flex-col">
+              <div class="mt-4 flex flex-col">
                 <label for="Village">Village</label>
-                <select name="Village" id="Village">
+                <select v-model="form.village" name="Village" id="Village">
                   <option value="">Select one</option>
                   <option v-for="item in villages" :key="item.id" :value="item.id">{{ item.name }}</option>
                 </select>
               </div>
+              <button class="mt-4 px-4 py-2 rounded bg-gray-900 text-white" type="submit">Save</button>
             </form>
           </div>
         </div>

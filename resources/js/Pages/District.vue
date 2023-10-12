@@ -12,44 +12,44 @@ const props = defineProps({
 
 
 
-// const form = useForm({
-//   selectedDistrict: '',
-//   thana: '',
-//   selectedThana: ''
-// })
+const form = useForm({
+  district: '',
+  thana: '',
+  village: '',
+})
 
-
-const selectedDistrict = ref(null);
-const selectedThana = ref(null);
 
 const thanas = ref(null);
 const villages = ref(null);
 
-watch(selectedDistrict, (newValue) => {
-  if(newValue) {
-    axios.get(`/api/thana/${newValue}`)
-    .then(response => {
-      thanas.value = response.data.thana;
-      console.log(response.data.thana);
-    })
-    .catch(error => {
-      console.error(error);
-    });
+watch(
+  () => form.district,
+  (newValue) => {
+    if(newValue) {
+      axios.get(`/api/thana/${newValue}`)
+        .then(response => {
+          thanas.value = response.data.thana;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
   }
+)
 
-});
 
-watch(selectedThana, (newValue) => {
-  if(newValue) {
-    axios.get(`/api/village/${newValue}`)
-      .then(response => {
-        villages.value = response.data.village;
-      })
-      .catch(error => {
-        console.error(error);
-      });
-  }
-
+watch(
+  () => form.thana,
+  (newValue) => {
+    if(newValue) {
+      axios.get(`/api/village/${newValue}`)
+        .then(response => {
+          villages.value = response.data.village;
+        })
+        .catch(error => {
+          console.error(error);
+        });
+    }
 });
 </script>
 <template>
@@ -65,7 +65,7 @@ watch(selectedThana, (newValue) => {
             <form>
               <div class="flex flex-col">
                 <label for="district">District</label>
-                <select v-model="selectedDistrict" name="district" id="district">
+                <select v-model="form.district" name="district" id="district">
                   <option value="">Select one</option>
                   <option v-for="item in district" :key="item.id" :value="item.id">{{ item.name }}</option>
                 </select>
@@ -73,7 +73,7 @@ watch(selectedThana, (newValue) => {
 
               <div class="flex flex-col">
                 <label for="thana">Thana</label>
-                <select v-model="selectedThana" name="thana" id="thana">
+                <select v-model="form.thana" name="thana" id="thana">
                   <option value="">Select one</option>
                   <option v-for="item in thanas" :key="item.id" :value="item.id">{{ item.name }}</option>
                 </select>
